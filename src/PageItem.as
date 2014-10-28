@@ -43,7 +43,7 @@ package
 			_totalNum = totalNum;
 			
 			_totalPage = Math.ceil(totalNum / onePageNum);
-			changePage(0, true);
+			changePage(_currPage, true);
 		}
 		
 		public function changePage(page:int, force:Boolean = false):void
