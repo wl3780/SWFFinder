@@ -4,8 +4,12 @@ package
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.sampler.NewObjectSample;
+	import flash.sampler.Sample;
+	import flash.sampler.getSamples;
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
+	import flash.utils.ByteArray;
 	
 	public class SWFFinder extends Sprite
 	{
@@ -29,6 +33,7 @@ package
 			this.removeEventListener(Event.ADDED_TO_STAGE, init);
 			
 			addEventListener("allComplete", allComplete);
+			addEventListener(Event.ENTER_FRAME, enterFrame);
 			if (_button == null) {
 				var txt:TextField = new TextField();
 				txt.text = "点击取样";
@@ -59,6 +64,15 @@ package
 			}
 			
 			var info:LoaderInfo = evt.target as LoaderInfo;
+			var url:String = info.url;
+			var bytes:ByteArray = info.bytes;
+			if (bytes == null) {
+				return;
+			}
+			
+			if (url == null) {
+				url = "无法获取";
+			}
 			trace("load some:" + info.url);
 			_loaders.push({url:info.url, bytes:info.bytes});
 			_view.update(_loaders);
@@ -70,6 +84,16 @@ package
 				_button.parent.removeChild(_view);
 			} else {
 				_button.parent.addChild(_view);
+			}
+		}
+		
+		private function enterFrame(evt:Event):void
+		{
+			for each (var s:Sample in getSamples()) {
+				if (s is NewObjectSample) {
+					var nos:NewObjectSample = s as NewObjectSample;
+					trace(nos.type, nos.stack);
+				}
 			}
 		}
 	}
