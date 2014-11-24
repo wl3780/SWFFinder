@@ -169,8 +169,8 @@ class LoaderCell extends Sprite
 	private function saveSWF(evt:MouseEvent):void
 	{
 		var ref:FileReference = new FileReference();
-		var arr:Array = _info.url.split(".");
-		var fileName:String = String(arr[0]).split("/").pop() + "." + arr[1];
+		var arr:Array = _info.url.split("?");
+		var fileName:String = String(arr[0]).split("/").pop();
 		ref.save(_info.bytes, fileName);
 	}
 	

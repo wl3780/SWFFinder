@@ -1,5 +1,7 @@
 package
 {
+	import com.demonsters.debugger.MonsterDebugger;
+	
 	import flash.display.LoaderInfo;
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -21,6 +23,7 @@ package
 		public function SWFFinder()
 		{
 			super();
+			MonsterDebugger.initialize(this);
 			if (this.stage) {
 				init();
 			} else {
