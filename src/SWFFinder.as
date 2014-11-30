@@ -1,7 +1,5 @@
 package
 {
-	import com.demonsters.debugger.MonsterDebugger;
-	
 	import flash.display.LoaderInfo;
 	import flash.display.Sprite;
 	import flash.events.Event;
