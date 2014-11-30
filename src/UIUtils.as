@@ -10,10 +10,12 @@ package
 		{
 		}
 		
-		public static function createTextField(text:String):TextField
+		public static function createTextField(text:String=null):TextField
 		{
 			var txt:TextField = new TextField();
-			txt.text = text;
+			if (text) {
+				txt.text = text;
+			}
 			txt.textColor = 0x000000;
 			return txt;
 		}

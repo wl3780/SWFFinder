@@ -11,7 +11,7 @@ package
 	public class SWFScanView extends Sprite
 	{
 		private const BORDER:int = 3;
-		private const VW:int = 400;
+		private const VW:int = 500;
 		private const VH:int = 280;
 		private const PAGE_NUM:int = 10;
 		
@@ -68,7 +68,7 @@ package
 			_pageItem.addEventListener(Event.CHANGE, pageChange);
 			this.addChild(_pageItem);
 			
-			this.graphics.beginFill(0x666666, 0.6);
+			this.graphics.beginFill(0xAAAAAA, 0.6);
 			this.graphics.drawRect(0, 0, VW, VH);
 			this.graphics.endFill();
 		}
@@ -131,6 +131,7 @@ import flash.events.MouseEvent;
 import flash.net.FileReference;
 import flash.text.TextField;
 import flash.text.TextFieldAutoSize;
+import flash.utils.ByteArray;
 
 class LoaderCell extends Sprite
 {
@@ -141,36 +142,25 @@ class LoaderCell extends Sprite
 	{
 		_info = info;
 		
-		var txt:TextField = new TextField();
-		txt.text = "保存";
-		txt.textColor = 0x000000;
-		txt.autoSize = TextFieldAutoSize.CENTER;
-		
-		_button = new Sprite();
-		_button.graphics.beginFill(0x666600);
-		_button.graphics.drawRect(0, 0, 40, 20);
-		_button.graphics.endFill();
+		_button = UIUtils.createButton("保存");
+		_button.addEventListener(MouseEvent.CLICK, saveSWF);
 		this.addChild(_button);
 		
-		txt.x = (_button.width - txt.width) >> 1;
-		txt.y = (_button.height - txt.height) >> 1;
-		_button.addChild(txt);
-		_button.mouseChildren = false;
-		_button.buttonMode = true;
-		_button.addEventListener(MouseEvent.CLICK, saveSWF);
-		
-		var url:TextField = new TextField();
+		var url:TextField = UIUtils.createTextField();
 		url.text = info.url ? info.url : "无法获取";
 		url.autoSize = TextFieldAutoSize.LEFT;
 		url.x = _button.width + 10;
 		this.addChild(url);
+		
+		var bytes:ByteArray = info.bytes;
+		url.appendText(" -- size:" + Math.ceil(bytes.length/1024) + "KB");
 	}
 	
 	private function saveSWF(evt:MouseEvent):void
 	{
 		var ref:FileReference = new FileReference();
-		var arr:Array = _info.url.split(".");
-		var fileName:String = String(arr[0]).split("/").pop() + "." + arr[1];
+		var arr:Array = _info.url.split("?");
+		var fileName:String = String(arr[0]).split("/").pop();
 		ref.save(_info.bytes, fileName);
 	}
 	
