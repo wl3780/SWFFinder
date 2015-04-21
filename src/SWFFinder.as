@@ -1,7 +1,5 @@
 package
 {
-	import com.demonsters.debugger.MonsterDebugger;
-	
 	import flash.display.LoaderInfo;
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -9,6 +7,7 @@ package
 	import flash.sampler.NewObjectSample;
 	import flash.sampler.Sample;
 	import flash.sampler.getSamples;
+	import flash.system.Security;
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
 	import flash.utils.ByteArray;
@@ -23,8 +22,8 @@ package
 		public function SWFFinder()
 		{
 			super();
-//			MonsterDebugger.initialize(this);
-			MonsterDebugger.initialize(this);
+			Security.allowDomain("*");
+			Security.allowInsecureDomain("*");
 			if (this.stage) {
 				init();
 			} else {
